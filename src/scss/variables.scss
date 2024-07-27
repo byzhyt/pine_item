@@ -1,0 +1,225 @@
+// 获取maps某个值
+@function getmap($maps, $key) {
+  @return map-get($maps, $key);
+}
+
+:root {
+  --color-line: #f7f8fa;
+  --color-h1: #333333;
+  --color-h2: #666666;
+  --color-h3: #999999;
+  --el-bg-color: #f2f6fc;
+  --el-color-info: #909399;
+  --el-color-error: #f56c6c;
+  --el-color-danger: #f56c6c;
+  --el-color-warning: #ffb800;
+  --el-color-success: #67c23a;
+  --el-color-primary: #409eff;
+  --el-color-white: #ffffff;
+  --el-color-black: #303248;
+  --el-border-color: #dcdfe6;
+  --el-font-size-base: 14px;
+  --el-disabled-text-color: #dcdcdc;
+  --el-disabled-bg-color: #eeeff2;
+  --el-text-color-placeholder: #cccccc;
+  --el-text-color-disabled: #c0c4cc;
+}
+
+/* 边框颜色 */
+/* 透明度 */
+$color-opacity: 0.3; // 组件禁用态的透明度
+
+// css3添加前缀
+@mixin addfix($t, $name, $value) {
+  $arrfix: '-webkit-', '-ms-', '-moz-', '-o-', '';
+
+  @each $type in $arrfix {
+    @if ($t==1) {
+      #{$name}: #{$type}#{$value};
+    }
+
+    @else {
+      #{$type}#{$name}: #{$value};
+    }
+  }
+}
+
+// 设置元素2D和3D转换
+@mixin transform($type, $value) {
+  $types: (
+    'none': 'none',
+    // 定义 2D 转换，使用六个值的矩阵。
+    'matrix': 'matrix(#{$value})',
+    // 定义 3D 转换，使用 16 个值的 4x4 矩阵。
+    'matrix3d': 'matrix3d(#{$value})',
+    // 定义 2D 转换。
+    'translate': 'translate(#{$value})',
+    // 定义 3D 转换。
+    'translate3d': 'translate3d(#{$value})',
+    // 定义转换，只是用 X 轴的值。
+    'translateX': 'translateX(#{$value})',
+    // 定义转换，只是用 Y 轴的值。
+    'translateY': 'translateY(#{$value})',
+    // 定义 3D 转换，只是用 Z 轴的值。
+    'translateZ': 'translateZ(#{$value})',
+    // 定义 2D 缩放转换。
+    'scale': 'scale(#{$value})',
+    // 定义 3D 缩放转换。
+    'scale3d': 'scale3d(#{$value})',
+    // 通过设置 X 轴的值来定义缩放转换。
+    'scaleX': 'scaleX(#{$value})',
+    // 通过设置 Y 轴的值来定义缩放转换。
+    'scaleY': 'scaleY(#{$value})',
+    // 通过设置 Z 轴的值来定义 3D 缩放转换。
+    'scaleZ': 'scaleZ(#{$value})',
+    // 定义 2D 旋转，在参数中规定角度。
+    'rotate': 'rotate(#{$value})',
+    // 定义 3D 旋转。
+    'rotate3d': 'rotate3d(#{$value})',
+    // 定义沿着 X 轴的 3D 旋转。
+    'rotateX': 'rotateX(#{$value})',
+    // 定义沿着 Y 轴的 3D 旋转。
+    'rotateY': 'rotateY(#{$value})',
+    // 定义沿着 Z 轴的 3D 旋转。
+    'rotateZ': 'rotateZ(#{$value})',
+    // 定义沿着 X 和 Y 轴的 2D 倾斜转换。
+    'skew': 'skew(#{$value})',
+    // 定义沿着 X 轴的 2D 倾斜转换。
+    'skewX': 'skewX(#{$value})',
+    // 定义沿着 Y 轴的 2D 倾斜转换。
+    'skewY': 'skewY(#{$value})',
+    // 为 3D 转换元素定义透视视图。
+    'perspective': 'perspective(#{$value})',
+  );
+@include addfix(0, 'transform', getmap($types, $type));
+}
+
+// 设置所有子元素在2D或3D平面呈现方式
+@mixin transform-style($value) {
+  $types: (
+    // 2D平面
+    'flat': 'flat',
+    // 3D平面
+    '3d': 'preserve-3d'
+  );
+@include addfix(0, 'transform-style', getmap($types, $value));
+}
+
+// 设置元素过度效果
+@mixin transition($value) {
+  @include addfix(0, 'transition', $value);
+}
+
+// 设置元素渐变
+@mixin bgramp($type, $value) {
+  @if (#{$type}=='line') {
+    @include addfix(1, 'background-image', 'linear-gradient(#{$value})');
+  }
+
+  @else {
+    @include addfix(1, 'background-image', 'radial-gradient(#{$value})');
+  }
+}
+
+@mixin bdramp($type, $value) {
+  border-image-slice: 1;
+
+  @if (#{$type}=='line') {
+    @include addfix(1, 'border-image', 'linear-gradient(#{$value})');
+  }
+
+  @else {
+    @include addfix(1, 'border-image', 'radial-gradient(#{$value})');
+  }
+}
+
+// 设置字体渐变
+@mixin textramp($type, $value) {
+  @include ramp($type, $value);
+  @include addfix(0, 'background-clip', 'text');
+  color: transparent;
+}
+
+// 设置背景图片
+@mixin background($value, $size: 'cover', $origin: 'border-box', $clip: 'border-box') {
+  background: #{$value}; // $size背景图大小    可选值cover,contain,px|%
+  @include addfix(0,
+    'background-size',
+    #{$size}); // $origin 设置背景图片起始位置  可选值:padding-box,boder-box,content-box
+  @include addfix(0,
+    'background-origin',
+    #{orugin}); // $clip设置背景绘制区域    可选值:padding-box,boder-box,content-box,text
+  @include addfix(0, 'background-clip', #{$clip});
+}
+
+// 设置元素圆角
+@mixin radius($value) {
+  @include addfix(0, 'border-radius', #{$value});
+}
+
+// 设置元素阴影
+@mixin shadow($type, $value) {
+  @if ($type=='in') {
+    @include addfix(0, 'box-shadow', 'inset #{$value}');
+  }
+
+  @else {
+    @include addfix(0, 'box-shadow', #{$value});
+  }
+}
+
+// 设置文本行数
+@mixin line-clamp($num: 1) {
+  overflow: hidden;
+  @include addfix(0, 'line-clamp', #{$num});
+  @include addfix(1, 'display', 'flex');
+  @include addfix(0, 'box-orient', 'vertical');
+  @content;
+}
+
+// 设置图片外观
+@mixin filter($type, $value) {
+  $types: (
+    // 无SVG滤镜效果。
+    'none': 'none',
+    // 设置对象的模糊效果
+    'blur': 'blur(#{$value})',
+    // 设置对象的亮度。除了百分比外，也可以用非负数表达。
+    'brightness': 'brightness(#{$value})',
+    // 设置对象的对比度。除了百分比外，也可以用0-1的数字表达。
+    'contrast': 'contrast(#{$value})',
+    // 设置对象的灰度。除了百分比外，也可以用0-1的数字表达。
+    'grayscale': 'grayscale(#{$value})',
+    // 设置对象的色相旋转。用0-360数字表达。
+    'hue-rotate': 'hue-rotate(#{$value})',
+    // 设置对象的反色。除了百分比外，也可以用0-1的数字表达。
+    'invert': 'invert(#{$value})',
+    // 设置对象的透明度。除了百分比外，也可以用0-1的数字表达。
+    'opacity': 'opacity(#{$value})',
+    // 设置对象的饱和度。除了百分比外，也可以用非负数表达。
+    'saturate': 'saturate(#{$value})',
+    // 设置对象的褐色程度。除了百分比外，也可以用0-1的数字表达。
+    'sepia': 'sepia(#{$value})',
+    // 设置对象的阴影。第一个长度是向右偏移距离，第二个长度是向下偏移距离，皆可为负值，皆为必传参数；第三个是阴影圆角，可选；第四个是阴影颜色，可选。
+    'drop-shadow': 'drop-shadow(#{$value})',
+    // 设置对象滤镜效果。通过SVG可实现以上所有效果。SVG可写在页面里，也可外部引用。可增加锚节点。
+    'url': 'url(#{$value})'
+  );
+@include addfix(0, 'filter', getmap($types, $type));
+}
+
+// css3动画
+@mixin keyframes($el, $name, $style: 1s linear infinite) {
+  $arrfix: '@-webkit-keyframes ', '@-ms-keyframes ', '@-moz-keyframes ', '@-o-keyframes ',
+    '@keyframes ';
+
+  #{$el} {
+    @include addfix(0, 'animation', #{$name} #{$style});
+  }
+
+  @each $type in $arrfix {
+    #{$type}#{$name } {
+      @content;
+    }
+  }
+}

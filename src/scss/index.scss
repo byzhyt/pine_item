@@ -1,0 +1,68 @@
+@import './main.scss';
+
+.web-body {
+  color: var(--text-color);
+  height: 100vh;
+  font-size: var(--el-font-size-base);
+  line-height: 2;
+}
+
+.el-table {
+  thead {
+    font-family: MyFont;
+  }
+
+  --el-table-current-row-bg-color:#409eff1f !important;
+  --el-table-row-hover-bg-color:#409eff1f !important;
+}
+
+.el-drawer {
+  --el-drawer-bg-color: var(--el-color-white) !important;
+
+  .el-drawer__header {
+    margin-right: 0 !important;
+    padding: 15px !important;
+  }
+
+  .el-drawer__body {
+    padding: 15px !important;
+  }
+}
+
+.el-dialog {
+  --el-dialog-bg-color: var(--el-color-white) !important;
+
+  .el-dialog__header {
+    margin-right: 0 !important;
+    padding: 15px !important;
+    padding-bottom: 0 !important;
+
+  }
+
+  .el-dialog__body {
+    padding: 15px !important;
+  }
+}
+
+
+.header-box {
+  background-color: var(--el-color-white);
+  box-shadow: 0px 15px 7px 0px rgba(229, 229, 229, 0.1);
+
+  .header-title {
+    font-family: 'headerFont';
+    background: linear-gradient(to right, #1e8dff, #76b4fe);
+    font-weight: bolder;
+    line-height: 1.4;
+  }
+}
+
+.el-message-box {
+  --el-messagebox-title-color: var(--el-color-black)
+}
+
+.el-form.el-form--inline {
+  .el-select {
+    width: 200px !important;
+  }
+}
