@@ -1,6 +1,6 @@
 {
   "name": "pine_item",
-  "private": true,
+  "private": false,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
@@ -13,6 +13,11 @@
     "@vitejs/plugin-vue-jsx": "^4.0.0",
     "@vueuse/core": "^10.11.0",
     "axios": "^1.7.2",
+    "echarts": "^5.5.1",
+    "element-plus": "^2.7.8",
+    "pine-utils": "^0.0.68",
+    "pinia": "^2.2.0",
+    "pinia-plugin-store": "^2.2.4",
     "rollup-plugin-visualizer": "^5.12.0",
     "unocss": "^0.61.5",
     "unplugin-vue-components": "^0.27.3",
