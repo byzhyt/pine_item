@@ -8,12 +8,11 @@
 }
 
 .el-table {
+  --el-table-current-row-bg-color:#409eff1f !important;
+  --el-table-row-hover-bg-color:#409eff1f !important;
   thead {
     font-family: MyFont;
   }
-
-  --el-table-current-row-bg-color:#409eff1f !important;
-  --el-table-row-hover-bg-color:#409eff1f !important;
 }
 
 .el-drawer {
